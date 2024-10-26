@@ -1,0 +1,99 @@
+﻿@model MvcBookStore.ViewModels.BookGenreViewModel
+<form asp-controller="Book" asp-action="Index" method="get">
+
+
+    <div class="form-group">
+        <label asp-for="BookGenre">Search by Genre:</label>
+        <select asp-for="BookGenre" asp-items="Model.Genres" class="form-control">
+            <option value="">All</option>
+        </select>
+    </div>
+
+
+    <div class="form-group">
+        <label asp-for="SearchString">Search by Title:</label>
+        <input type="text" asp-for="SearchString" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+
+</form>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].YearPublished)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].NumPage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].Publisher)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].FrontPage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].DownloadUrl)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Books[0].Author)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Books) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YearPublished)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumPage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Publisher)
+            </td>
+            <td>
+                    <asp:Image ID="My Image" runat="server" ImageUrl="C:\Users\HP\source\repos\MvcBookStore\Images\book1.jpg" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DownloadUrl)
+            </td>
+            <td>
+                   
+                @if (item.AuthorId != null)
+                  {
+                  <a asp-controller="Authors" asp-action="Details" asp-route-id="@item.AuthorId"> @Html.DisplayFor(modelItem => item.Author.FirstName)</a>
+                  }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
